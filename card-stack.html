@@ -1,0 +1,123 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-card/paper-card.html">
+<link rel="import" href="../paper-button/paper-button.html">
+<link rel="import" href="../paper-styles/paper-styles.html">
+
+<!--
+`card-stack`
+An element for stackings information cards every which way!
+
+@demo demo/index.html
+-->
+
+<dom-module id="card-stack">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      #container {
+        position: relative;
+        width: auto;
+        height: auto;
+      }
+      #content {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      #content ::content {
+
+      }
+
+    </style>
+      <div id="container">
+        <div id="content">
+          <content></content>
+        </div>
+      </div>
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'card-stack',
+
+      properties: {
+        prop1: {
+          type: String,
+          value: 'card-stack',
+        },
+        index: {
+          type: Number,
+          observer: '_indexChanged'
+        },
+        previousIndex: {
+          type: Number,
+        },
+        contentChildren: {
+          type: Array,
+        }
+      },
+      /**
+       * Hides all the children except for the first child and sets the
+       * index and previousIndex properties
+       */
+      ready: function() {
+
+        this.contentChildren = this.getEffectiveChildren();
+        //Must set the previous index before the index because of the
+        //_indexChanged observer.  The observer tracks both indexes.
+        this.previousIndex = this.contentChildren.length - 1;
+        this.index = 0;
+        for (var i = this.index + 1; i < this.contentChildren.length; i++){
+          this.contentChildren[i].style.display = "none";
+        }
+      },
+      /**
+       * Goes to the next card in the stack.
+       */
+      nextCard: function() {
+        this.previousIndex = this.index;
+        this.index = (this.index + 1) % this.contentChildren.length;
+      },
+
+      /**
+       * Goes to the previous card in the stack.
+       */
+      previousCard: function() {
+        this.previousIndex = this.index;
+        if (this.index == 0) {
+            this.index = this.contentChildren.length -1;
+        } else {
+            this.index = (this.index - 1)
+        }
+      },
+      /**
+       * Shows the card at the specified index
+       * @param  {number} index Index of the card to be shown.
+       */
+      show: function(index) {
+        if(index < 0 || index >= this.contentChildren.length) {
+          throw "Error: Index out of bounds";
+        }
+        this.contentChildren[this.index].style.display = "none";
+        this.contentChildren[index].style.display = "inline-block";
+        this.index = index;
+      },
+
+      /**
+       * Any time the index changes, display the card at the current
+       * index, and hide the card at the previous index. Note:  The previous
+       * index may be index + 1 or index - 1 depending on the navigation
+       * direction
+       */
+      _indexChanged: function() {
+        this.contentChildren[this.previousIndex].style.display = "none";
+
+        this.contentChildren[this.index].style.display = "inline-block";
+      }
+
+    });
+  </script>
+</dom-module>

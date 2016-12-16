@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>card-stack demo</title>
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+    <link rel="import" href="../../paper-button/paper-button.html">
+    <link rel="import" href="../card-stack.html">
+
+
+
+    <style is="custom-style" include="demo-pages-shared-styles">
+      .margin-bottom {
+        margin-bottom: 1em;
+      }
+    </style>
+  </head>
+  <body>
+    <paper-button class="margin-bottom" onclick="previousCard()" raised>Previous</paper-button>
+    <paper-button class="margin-bottom" onclick="nextCard()" raised>Next</paper-button>
+    <card-stack>
+
+
+      <paper-card elevation="1" heading="Card Title" style="background: red">
+        <div class="card-content">RED CARD</div>
+        <div class="card-actions">
+          <paper-button>ARE</paper-button>
+        </div>
+      </paper-card>
+      <paper-card elevation="1" heading="Card Title" style="background: blue">
+        <div class="card-content">BLUE CARD</div>
+        <div class="card-actions">
+          <paper-button>YOU</paper-button>
+        </div>
+      </paper-card>
+      <paper-card elevation="1" heading="Card Title" style="background: yellow">
+        <div class="card-content">YELLOW CARD</div>
+        <div class="card-actions">
+          <paper-button>READY?</paper-button>
+        </div>
+      </paper-card>
+      <paper-card elevation="1" heading="Card Title" style="background: green">
+        <div class="card-content">GREEN CARD</div>
+        <div class="card-actions">
+          <paper-button>GET</paper-button>
+        </div>
+      </paper-card>
+      <paper-card elevation="1" heading="Card Title" style="background: purple">
+        <div class="card-content">PURPLE CARD</div>
+        <div class="card-actions">
+          <paper-button>HYPE</paper-button>
+        </div>
+      </paper-card>
+    </card-stack>
+
+
+
+    <script>
+    var cardStack = document.querySelector('card-stack');
+
+    function nextCard() {
+      //This is calling cardStack's internal methods.
+      cardStack.nextCard();
+    }
+    function previousCard() {
+      cardStack.previousCard();
+    }
+
+    </script>
+  </body>
+
+</html>
